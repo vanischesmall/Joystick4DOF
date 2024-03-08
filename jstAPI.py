@@ -1,16 +1,17 @@
-from serial import Serial
-
 JoystickPkg = tuple[bool, int, int, int]
 
-class Joystick:
+class JstAPI:
     def __init__(self, 
-                 port: str = '/dev/ttyUSB0'
-                 raw: bool = False
+                 port: str = '/dev/ttyUSB0',
+                 raw: bool = False,
                  ) -> object:
         self.port = port
+        self.raw = raw
 
         try:
+            from serial import Serial
             self.nano = Serial(self.port, 115200)
+            
             self.is_connected = True
             print('Connected succesfully!')
         except:
@@ -56,7 +57,7 @@ class Joystick:
 
 
 if __name__ == "__main__":
-    jst = Joystick('dev/ttyUSB0')
+    jst = JstAPI('dev/ttyUSB0')
     
     while True:
         jst.read()
