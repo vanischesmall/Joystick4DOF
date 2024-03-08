@@ -5,6 +5,7 @@ JoystickPkg = tuple[bool, int, int, int]
 class Joystick:
     def __init__(self, 
                  port: str = '/dev/ttyUSB0'
+                 raw: bool = False
                  ) -> object:
         self.port = port
 
@@ -39,8 +40,15 @@ class Joystick:
         self.rotate = int(pkg[1:4]) - 200
         self.joystX = int(pkg[4:7]) - 200
         self.joystY = int(pkg[7:10]) - 200
+        
+        return self._return_values()
 
     def _return_values(self) -> JoystickPkg:
+        if self.raw:
+            self.rotate += 200
+            self.joystX += 200
+            self.joystY += 200
+
         return self.button, \
                self.rotate, \
                self.joystX, \
