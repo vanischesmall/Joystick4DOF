@@ -1,3 +1,4 @@
+from serial import Serial
 JoystickPkg = tuple[bool, int, int, int]
 
 class JstAPI:
@@ -7,16 +8,13 @@ class JstAPI:
                  ) -> object:
         self.port = port
         self.raw = raw
+        self.is_connected = False
 
         try:
-            from serial import Serial
             self.nano = Serial(self.port, 115200)
-            
             self.is_connected = True
-            print('Connected succesfully!')
         except:
             self.nano = None
-            print('Can not connect!')
 
         self.button: bool = None
         self.rotate: int  = None
@@ -25,7 +23,6 @@ class JstAPI:
 
     def read(self) -> JoystickPkg:
         if self.nano == None or not self.nano.is_open:
-            print('Joystick not connected!')
             self.is_connected = False
             
             self.button = 0
@@ -57,7 +54,7 @@ class JstAPI:
 
 
 if __name__ == "__main__":
-    jst = JstAPI('dev/ttyUSB0')
+    jst = JstAPI('/dev/ttyUSB0')
     
     while True:
         jst.read()
