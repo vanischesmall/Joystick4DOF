@@ -22,7 +22,7 @@ class JstAPI:
         self.joystY: int  = None
 
     def read(self) -> JoystickPkg:
-        if self.nano == None or not self.nano.is_open:
+        if self.nano is None or not self.nano.is_open:
             self.is_connected = False
             
             self.button = 0
