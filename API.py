@@ -1,7 +1,7 @@
 from serial import Serial
 JoystickPkg = tuple[bool, int, int, int]
 
-class JstAPI:
+class JoystickAPI:
     def __init__(self, 
                  port: str = '/dev/ttyUSB0',
                  raw: bool = False,
